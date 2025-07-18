@@ -1,4 +1,5 @@
 describe("Login", () => {
+    beforeEach(() => cy.api_deleteProjects())
   it("successfully", () => {
     const user = Cypress.env("user_name");
     const password = Cypress.env("user_password");
