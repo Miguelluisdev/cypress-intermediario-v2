@@ -57,3 +57,30 @@ Cypress.Commands.add("gui_createIssue", (issue) => {
   cy.get(".qa-issuable-form-description").type(issue.description);
   cy.contains("Submit issue").click();
 });
+
+Cypress.Commands.add('api_createMilestone', (projectId, milestone) => {
+  cy.request({
+    method: 'POST',
+    url: `/api/v4/projects/${projectId}/milestones`,
+    body: { title: milestone.title },
+    headers: { Authorization: accessToken },
+  })
+})
+Cypress.Commands.add('api_createLabel', (projectId, label) => {
+  cy.request({
+    method: 'POST',
+    url: `/api/v4/projects/${projectId}/labels`,
+    body: {
+      name: label.name,
+      color: label.color
+    },
+    headers: { Authorization: accessToken },
+  })
+})
+
+
+Cypress.Commands.add('gui_setLabelOnIssue', label => {
+  cy.get('.qa-edit-link-labels').click()
+  cy.contains(label.name).click()
+  cy.get('body').click()
+})
